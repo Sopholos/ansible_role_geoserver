@@ -1,2 +1,38 @@
 ---
-# defaults file for ansible-role-template
+geoserver_install: True
+geoserver_major_version: '2.10'
+geoserver_minor_version: 5
+geoserver_app_name: GeoServer
+geoserver_version: '{{ geoserver_major_version }}.{{ geoserver_minor_version }}'
+geoserver_download_url: 'http://sourceforge.net/projects/geoserver/files/GeoServer/{{ geoserver_version }}/geoserver-{{ geoserver_version }}-war.zip'
+
+geoserver_additional_jars: False
+
+geoserver_download_directory: /srv/geoserver
+geoserver_create_data_dir: True
+geoserver_data_directory: /srv/geoserver_data
+geoserver_log_directory: /var/log/geoserver
+geoserver_instance_path: '{{ tomcat_m_instances_base_path }}/{{ tomcat_m_instances_port }}'
+
+geoserver_spatial_install: False
+geoserver_spatial_url: 'http://ares.boundlessgeo.com/geoserver/{{ geoserver_major_version }}.x/community-latest/geoserver-{{ geoserver_major_version }}-SNAPSHOT-spatialite-plugin.zip'
+
+geoserver_spatial_dpkg_requirements:
+  - libgeos-c1
+  - libproj0
+  - proj-bin
+  - libspatialite5
+
+geoserver_spatial_db_dir: /srv/geoserver_spatialite/data
+
+geoserver_marlin_renderer: False
+geoserver_marlin_renderer_tag: '0_9_4_3'
+geoserver_marlin_renderer_version: '0.9.4.3'
+geoserver_marlin_jar_name: 'marlin-{{ geoserver_marlin_renderer_version }}-Unsafe.jar'
+geoserver_marlin_java2d_jar_name: 'marlin-{{ geoserver_marlin_renderer_version }}-Unsafe-sun-java2d.jar'
+geoserver_marlin_renderer_github_base: "https://github.com/bourgesl/marlin-renderer/releases/tag/v{{ geoserver_marlin_renderer_tag }}"
+geoserver_marlin_renderer_github_java2d_url: "https://github-production-release-asset-2e65be.s3.amazonaws.com/16202089/ee528f80-35f1-11ea-969e-f87a9c66a2ee?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20201126%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20201126T132733Z&X-Amz-Expires=300&X-Amz-Signature=e4b6e69f3b23c16387976a747c9838358acb15ba68ddf0e382f8e22bffef1412&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=16202089&response-content-disposition=attachment%3B%20filename%3Dmarlin-0.9.4.3-Unsafe-sun-java2d.jar&response-content-type=application%2Foctet-stream"
+geoserver_marlin_renderer_github_url: "https://github-production-release-asset-2e65be.s3.amazonaws.com/16202089/edb9f900-35f1-11ea-91e8-52082b939e33?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20201126%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20201126T132427Z&X-Amz-Expires=300&X-Amz-Signature=811102c4311fa0008fb3904f60c383378b5877b06a099bafb1c8919cf5cf0cbd&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=16202089&response-content-disposition=attachment%3B%20filename%3Dmarlin-0.9.4.3-Unsafe.jar&response-content-type=application%2Foctet-stream"
+geoserver_marlin_renderer_java_options: "-Xbootclasspath/a:{{ geoserver_instance_path }}/webapps/geoserver/WEB-INF/lib/marlin*.jar -Dsun.java2d.renderer=org.marlin.pisces.MarlinRenderingEngine"
+
+# 

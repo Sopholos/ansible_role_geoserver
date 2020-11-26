@@ -1,0 +1,27 @@
+---
+- name: Manage the marlin renderer
+  block:
+  - set_fact:
+      ansible_python_interpreter: /usr/bin/python3.6
+    when: ansible_distribution_release == "trusty"
+
+  - name: Download the marlin renderer jar file
+    get_url: url={{ geoserver_marlin_renderer_github_url }} dest={{ item.instance_path }}/webapps/{{ geoserver_app_name | lower }}/WEB-INF/lib/{{ geoserver_marlin_jar_name }} owner={{ item.user }} group={{ item.user }} force=yes
+    with_items:
+        - '{{ tomcat_m_instances }}'
+    notify: tomcat instances restart
+
+  - name: Download the marlin renderer jar java2d file
+    get_url: url={{ geoserver_marlin_renderer_github_java2d_url }} dest={{ item.instance_path }}/webapps/{{ geoserver_app_name | lower }}/WEB-INF/lib/{{ geoserver_marlin_java2d_jar_name }} owner={{ item.user }} group={{ item.user }} force=yes
+    with_items:
+        - '{{ tomcat_m_instances }}'
+    notify: tomcat instances restart
+
+  - set_fact:
+      ansible_python_interpreter: /usr/bin/python
+    when: ansible_distribution_release == "trusty"
+
+  when:
+    - geoserver_install
+    - geoserver_marlin_renderer
+  tags: [ 'geoserver', 'geoserver_marlin' ]

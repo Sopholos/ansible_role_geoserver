@@ -1,2 +1,8 @@
 ---
-# tasks file for ansible-role-template
+- import_tasks: geoserver.yml
+- import_tasks: geoserver-spatialite.yml
+  when: geoserver_spatial_install
+- import_tasks: marlin-renderer.yml
+  when: geoserver_marlin_renderer
+
+
