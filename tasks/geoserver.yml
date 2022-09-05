@@ -42,13 +42,13 @@
     - name: Unpack the Geoserver war file
       unarchive: copy=no src={{ geoserver_download_directory }}/geoserver.war dest={{ item.instance_path }}/webapps/{{ geoserver_app_name | lower }} creates={{ item.instance_path }}/webapps/{{ geoserver_app_name | lower }}/WEB-INF/lib owner={{ item.user }} group={{ item.user }}
       with_items: '{{ tomcat_m_instances }}'
-      notify: tomcat instances restart
+      notify: tomcat multiple-instances restart
 
     - name: Remove the postgres jdbc driver when we want a JNDI profile
       shell: rm -f {{ item.instance_path }}/webapps/{{ geoserver_app_name | lower }}/WEB-INF/lib/postgresql*.jdbc*.jar
       with_items: '{{ tomcat_m_instances }}'
       when: tomcat_install_pg_jdbc
-      notify: tomcat instances restart
+      notify: tomcat multiple-instances restart
 
     - name: Download newer jar files when needed
       get_url: url={{ item.1.url }} dest={{ item.0.instance_path }}/webapps/{{ geoserver_app_name | lower }}/WEB-INF/lib/{{ item.1.file }} owner={{ item.0.user }} group={{ item.0.user }} force=yes
@@ -56,7 +56,7 @@
         - '{{ tomcat_m_instances }}'
         - '{{ geoserver_patches_data | default (omit) }}'
       when: geoserver_additional_jars
-      notify: tomcat instances restart
+      notify: tomcat multiple-instances restart
       tags: [ 'geoserver', 'geopatch' ]
 
   when: geoserver_install
@@ -66,7 +66,7 @@
     - name: Remove the Geoserver webapp directory
       file: path={{ item.instance_path }}/webapps/{{ geoserver_app_name | lower }} state=absent
       with_items: '{{ tomcat_m_instances }}'
-      notify: tomcat instances restart
+      notify: tomcat multiple-instances restart
 
     - name: Remove the Geoserver download and data directories
       file: path={{ item }} state=absent

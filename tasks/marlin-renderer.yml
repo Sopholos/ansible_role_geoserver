@@ -9,13 +9,13 @@
     get_url: url={{ geoserver_marlin_renderer_github_url }} dest={{ item.instance_path }}/webapps/{{ geoserver_app_name | lower }}/WEB-INF/lib/{{ geoserver_marlin_jar_name }} owner={{ item.user }} group={{ item.user }} force=yes
     with_items:
         - '{{ tomcat_m_instances }}'
-    notify: tomcat instances restart
+    notify: tomcat multiple-instances restart
 
   - name: Download the marlin renderer jar java2d file
     get_url: url={{ geoserver_marlin_renderer_github_java2d_url }} dest={{ item.instance_path }}/webapps/{{ geoserver_app_name | lower }}/WEB-INF/lib/{{ geoserver_marlin_java2d_jar_name }} owner={{ item.user }} group={{ item.user }} force=yes
     with_items:
         - '{{ tomcat_m_instances }}'
-    notify: tomcat instances restart
+    notify: tomcat multiple-instances restart
 
   - set_fact:
       ansible_python_interpreter: /usr/bin/python
