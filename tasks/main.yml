@@ -1,8 +1,18 @@
 ---
+- name: facts
+  import_tasks: facts.yml
+
+- name: dependencies
+  import_tasks: dependencies.yml
+
+- name: preparation
+  import_tasks: preparation.yml
+
 - import_tasks: geoserver.yml
 - import_tasks: geoserver-spatialite.yml
   when: geoserver_spatial_install
 - import_tasks: marlin-renderer.yml
   when: geoserver_marlin_renderer
 
-
+- name: geoserver service
+  import_tasks: geoserver-service.yml

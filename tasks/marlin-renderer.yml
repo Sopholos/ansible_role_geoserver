@@ -22,6 +22,5 @@
     when: ansible_distribution_release == "trusty"
 
   when:
-    - geoserver_install
     - geoserver_marlin_renderer
   tags: [ 'geoserver', 'geoserver_marlin' ]

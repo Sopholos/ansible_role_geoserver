@@ -1,0 +1,10 @@
+---
+- name: Add user {{ geoserver_user }}
+  user:
+    name: "{{ geoserver_user }}"
+    groups: "{{ geoserver_user }}"
+    shell: /sbin/nologin
+    create_home: no
+    append: yes
+    comment: "Geoserver nologin User"
+    state: present    

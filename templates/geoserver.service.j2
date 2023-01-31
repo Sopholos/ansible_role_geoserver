@@ -1,0 +1,21 @@
+[Unit]
+Description=GeoServer Service
+After=network.target
+
+[Service]
+Type=simple
+
+User={{ geoserver_user }}
+Group={{ geoserver_user_group }}
+
+Environment="GEOSERVER_HOME={{ geoserver_instance_path_versioned }}"
+Environment="GEOSERVER_DATA_DIR={{ geoserver_data_directory }}"
+Environment="GEOSERVER_LOG_LOCATION={{ geoserver_log_directory }}/geoserver.log"
+Environment="JAVA_TOOL_OPTIONS=-Xms{{ geoserver_java_Xms }} -Xmx{{ geoserver_java_Xmx }}"
+PassEnvironment=GEOSERVER_HOME GEOSERVER_DATA_DIR GEOSERVER_LOG_LOCATION JAVA_TOOL_OPTIONS
+
+ExecStart={{ geoserver_instance_path_versioned }}/bin/startup.sh
+ExecStop={{ geoserver_instance_path_versioned }}/bin/shutdown.sh
+
+[Install]
+WantedBy=multi-user.target

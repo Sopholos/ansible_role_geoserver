@@ -17,13 +17,8 @@ galaxy_info:
       versions:
         - trusty
         - bionic
+        - jammy
 
   galaxy_tags:
     - geoserver
-
-dependencies:
-  - src: git+https://gitea-s2i2s.isti.cnr.it/ISTI-ansible-roles/ansible-role-tomcat-multiple-instances.git
-    version: master
-    name: tomcat-multiple-instances
-    state: latest
 

@@ -1,18 +1,21 @@
 ---
-geoserver_install: True
 geoserver_major_version: '2.10'
 geoserver_minor_version: 5
 geoserver_app_name: GeoServer
+geoserver_user: geoserver
+geoserver_user_group: geoserver
 geoserver_version: '{{ geoserver_major_version }}.{{ geoserver_minor_version }}'
-geoserver_download_url: 'http://sourceforge.net/projects/geoserver/files/GeoServer/{{ geoserver_version }}/geoserver-{{ geoserver_version }}-war.zip'
+geoserver_download_url: 'http://sourceforge.net/projects/geoserver/files/GeoServer/{{ geoserver_version }}/geoserver-{{ geoserver_version }}-bin.zip'
 
 geoserver_additional_jars: False
 
+geoserver_java_Xms: '512m'
+geoserver_java_Xmx: '3072m'
 geoserver_download_directory: /srv/geoserver
 geoserver_create_data_dir: True
 geoserver_data_directory: /srv/geoserver_data
 geoserver_log_directory: /var/log/geoserver
-geoserver_instance_path: '{{ tomcat_m_instances_base_path }}/{{ tomcat_m_instances_port }}'
+geoserver_instance_path: /usr/share/geoserver
 
 geoserver_spatial_install: False
 geoserver_spatial_url: 'http://ares.boundlessgeo.com/geoserver/{{ geoserver_major_version }}.x/community-latest/geoserver-{{ geoserver_major_version }}-SNAPSHOT-spatialite-plugin.zip'

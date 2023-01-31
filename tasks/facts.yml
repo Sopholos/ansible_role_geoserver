@@ -1,0 +1,4 @@
+---
+- name: set fact full instance path
+  set_fact:
+     geoserver_instance_path_versioned: "{{ geoserver_instance_path }}/{{ geoserver_version }}"

@@ -1,0 +1,19 @@
+---
+- name: register geoserver service
+  ansible.builtin.template:
+    dest: /usr/lib/systemd/system/geoserver.service
+    src: geoserver.service.j2
+    mode: '0644'
+  register: geoserver_systemd
+  notify: Restart geoserver services
+
+- name: reload systemd configuration
+  become: yes
+  systemd:
+    daemon_reload: true
+  when: geoserver_systemd is changed
+
+- name: enable geoserver
+  become: yes
+  service: name=geoserver enabled=yes
+  when: geoserver_systemd is changed
