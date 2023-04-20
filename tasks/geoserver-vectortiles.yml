@@ -1,0 +1,12 @@
+---
+- block:
+    - name: Download and unpack the Geoserver vectortiles extension
+      unarchive:
+        copy: no
+        src: "{{ geoserver_vectortiles_url }}"
+        dest: "{{ geoserver_instance_path }}/{{ geoserver_version }}/webapps/geoserver/WEB-INF/lib/"
+        owner: "{{ geoserver_user }}"
+        group: "{{ geoserver_user_group }}"
+      notify: Restart geoserver services
+  when: geoserver_vectortiles_install
+  tags: [ 'geoserver', 'vectortiles' ]

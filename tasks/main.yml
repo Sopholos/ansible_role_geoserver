@@ -14,6 +14,10 @@
 
 - import_tasks: geoserver-spatialite.yml
   when: geoserver_spatial_install
+
+- import_tasks: geoserver-vectortiles.yml
+  when: geoserver_vectortiles_install
+
 - import_tasks: marlin-renderer.yml
   when: geoserver_marlin_renderer
 

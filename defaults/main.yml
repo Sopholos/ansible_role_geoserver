@@ -20,6 +20,9 @@ geoserver_instance_path: /usr/share/geoserver
 geoserver_spatial_install: False
 geoserver_spatial_url: 'http://ares.boundlessgeo.com/geoserver/{{ geoserver_major_version }}.x/community-latest/geoserver-{{ geoserver_major_version }}-SNAPSHOT-spatialite-plugin.zip'
 
+geoserver_vectortiles_install: False
+geoserver_vectortiles_url: 'https://sourceforge.net/projects/geoserver/files/GeoServer/{{ geoserver_version }}/extensions/geoserver-{{ geoserver_version }}-vectortiles-plugin.zip'
+
 geoserver_spatial_dpkg_requirements:
   - libgeos-c1
   - libproj0
