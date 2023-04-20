@@ -8,10 +8,15 @@ Type=simple
 User={{ geoserver_user }}
 Group={{ geoserver_user_group }}
 
+{% set java_timezone = '' %}
+{% if geoserver_timezone is defined %}
+{% set java_timezone = '-Duser.timezone=' + geoserver_timezone %}
+{% endif %}
+
 Environment="GEOSERVER_HOME={{ geoserver_instance_path_versioned }}"
 Environment="GEOSERVER_DATA_DIR={{ geoserver_data_directory }}"
 Environment="GEOSERVER_LOG_LOCATION={{ geoserver_log_directory }}/geoserver.log"
-Environment="JAVA_TOOL_OPTIONS=-Xms{{ geoserver_java_Xms }} -Xmx{{ geoserver_java_Xmx }}"
+Environment="JAVA_TOOL_OPTIONS=-Xms{{ geoserver_java_Xms }} -Xmx{{ geoserver_java_Xmx }} {{ java_timezone }}"
 PassEnvironment=GEOSERVER_HOME GEOSERVER_DATA_DIR GEOSERVER_LOG_LOCATION JAVA_TOOL_OPTIONS
 
 ExecStart={{ geoserver_instance_path_versioned }}/bin/startup.sh
