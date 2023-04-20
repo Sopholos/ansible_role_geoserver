@@ -29,4 +29,4 @@ $text = Remove-Comment `
     "<!-- Uncomment following filter to enable CORS`n" `
     "-->"
 
-Set-Content -Path $path -Value $text
+Set-Content -Path $path -Value ($text.Trim())
