@@ -1,0 +1,25 @@
+---
+- name: prepare | dependencies
+  apt:
+    update_cache: yes
+    name:
+      - snapd
+
+- name: prepare | snap powershell
+  community.general.snap:
+    name:
+      - powershell
+    classic: true
+
+- name: prepare | copy PS scripts
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: u+rwx,g=,o=
+  with_items: 
+    - { src: Enable-CORS.ps1, dest: /usr/local/bin/Enable-CORS.ps1 }    
+
+- name: configure | enable CORS
+  shell: /usr/local/bin/Enable-CORS.ps1 "{{ geoserver_instance_path }}/{{ geoserver_version }}/webapps/geoserver/WEB-INF/web.xml"

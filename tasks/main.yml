@@ -9,6 +9,9 @@
   import_tasks: preparation.yml
 
 - import_tasks: geoserver.yml
+- import_tasks: enable-cors.yaml
+  when: geoserver_enable_cors is defined and geoserver_enable_cors | bool
+
 - import_tasks: geoserver-spatialite.yml
   when: geoserver_spatial_install
 - import_tasks: marlin-renderer.yml
