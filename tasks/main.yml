@@ -18,6 +18,9 @@
 - import_tasks: geoserver-vectortiles.yml
   when: geoserver_vectortiles_install
 
+- import_tasks: geoserver-css.yml
+  when: geoserver_css_install
+
 - import_tasks: marlin-renderer.yml
   when: geoserver_marlin_renderer
 
