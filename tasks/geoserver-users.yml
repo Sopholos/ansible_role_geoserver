@@ -1,0 +1,33 @@
+---
+- block:
+    - name: change default admin password
+      uri:
+        url: http://localhost:8080/geoserver/rest/security/self/password
+        method: PUT
+        user: admin
+        password: geoserver
+        force_basic_auth: true
+        body_format: json
+        body:
+          newPassword: "{{ geoserver_admin_password }}"
+      register: change_password_response
+      failed_when: change_password_response.status not in [200, 401]
+    
+    - name: reload configuration
+      uri:
+        url: http://localhost:8080/geoserver/rest/reload
+        method: POST
+        user: admin
+        password: geoserver
+        force_basic_auth: true
+      register: reload_response
+      when: change_password_response.status in [200]
+
+    - name: restart on success configuration
+      debug:
+        msg: Restarting geoserver after password changes (bug https://osgeo-org.atlassian.net/browse/GEOS-9602)
+      when: reload_response is defined and reload_response.status is defined and reload_response.status in [200]
+      notify: Restart geoserver services
+      changed_when: true
+
+  when: geoserver_admin_password is defined

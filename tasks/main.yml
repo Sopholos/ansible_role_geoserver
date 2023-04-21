@@ -9,6 +9,9 @@
   import_tasks: preparation.yml
 
 - import_tasks: geoserver.yml
+
+- import_tasks: geoserver-users.yml  
+
 - import_tasks: enable-cors.yaml
   when: geoserver_enable_cors is defined and geoserver_enable_cors | bool
 
