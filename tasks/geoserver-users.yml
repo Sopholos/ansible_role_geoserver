@@ -12,6 +12,7 @@
           newPassword: "{{ geoserver_admin_password }}"
       register: change_password_response
       failed_when: change_password_response.status not in [200, 401]
+      no_log: True
     
     - name: reload configuration
       uri:
@@ -22,6 +23,7 @@
         force_basic_auth: true
       register: reload_response
       when: change_password_response.status in [200]
+      no_log: True
 
     - name: restart on success configuration
       debug:
