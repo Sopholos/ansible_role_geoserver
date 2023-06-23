@@ -45,3 +45,6 @@
     src: "{{ geoserver_download_zip }}"
     dest: "{{ geoserver_instance_path_versioned }}"
   when: geoserver_download is changed or geoserver_instance_folder is changed
+
+- name: geoserver service init
+  import_tasks: geoserver-service.yml

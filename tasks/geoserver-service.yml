@@ -17,3 +17,8 @@
   become: yes
   service: name=geoserver enabled=yes
   when: geoserver_systemd is changed
+
+- name: start geoserver services
+  ansible.builtin.service:
+    name: geoserver
+    state: started
