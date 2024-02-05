@@ -1,5 +1,15 @@
 ---
 - block:
+    - name: check admin password changed
+      uri:
+        url: http://localhost:8080/geoserver/rest/about/system-status
+        method: GET
+        user: admin
+        password: "{{ geoserver_admin_password }}"
+        force_basic_auth: true
+      register: system_status_response
+      no_log: True
+  
     - name: change default admin password
       uri:
         url: http://localhost:8080/geoserver/rest/security/self/password
@@ -12,8 +22,9 @@
           newPassword: "{{ geoserver_admin_password }}"
       register: change_password_response
       failed_when: change_password_response.status not in [200, 401]
+      when: system_status_response.status not in [200]
       no_log: True
-    
+
     - name: reload configuration
       uri:
         url: http://localhost:8080/geoserver/rest/reload
@@ -22,7 +33,7 @@
         password: geoserver
         force_basic_auth: true
       register: reload_response
-      when: change_password_response.status in [200]
+      when: change_password_response is defined and change_password_response.status is defined and change_password_response.status in [200]
       no_log: True
 
     - name: restart on success configuration
@@ -32,4 +43,12 @@
       notify: Restart geoserver services
       changed_when: true
 
-  when: geoserver_admin_password is defined
+- block:
+    - name: setup users
+      include_tasks: geoserver-user.yml
+      loop_control:
+        loop_var: user_item
+      with_items: "{{ geoserver_users }}"
+      no_log: True
+
+  when: geoserver_users is defined

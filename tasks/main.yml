@@ -1,31 +1,41 @@
 ---
 - name: facts
   import_tasks: facts.yml
+  tags: [ init ]
 
 - name: dependencies
   import_tasks: dependencies.yml
+  tags: [ install ]
 
 - name: preparation
   import_tasks: preparation.yml
+  tags: [ install ]
 
 - import_tasks: geoserver.yml
+  tags: [ install ]
 
-- import_tasks: geoserver-users.yml  
+- import_tasks: geoserver-users.yml
+  tags: [ users ]
 
 - import_tasks: enable-cors.yaml
   when: geoserver_enable_cors is defined and geoserver_enable_cors | bool
+  tags: [ config ]
 
-- import_tasks: geoserver-spatialite.yml
-  when: geoserver_spatial_install
+- block:
+  - import_tasks: geoserver-spatialite.yml
+    when: geoserver_spatial_install
 
-- import_tasks: geoserver-vectortiles.yml
-  when: geoserver_vectortiles_install
+  - import_tasks: geoserver-vectortiles.yml
+    when: geoserver_vectortiles_install
 
-- import_tasks: geoserver-css.yml
-  when: geoserver_css_install
+  - import_tasks: geoserver-css.yml
+    when: geoserver_css_install
 
-- import_tasks: marlin-renderer.yml
-  when: geoserver_marlin_renderer
+  - import_tasks: marlin-renderer.yml
+    when: geoserver_marlin_renderer
+
+  tags: [ extensions ]
 
 - name: geoserver service
   import_tasks: geoserver-service.yml
+  tags: [ install ]
