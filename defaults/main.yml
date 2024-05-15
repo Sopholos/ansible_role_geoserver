@@ -44,8 +44,8 @@ geoserver_marlin_renderer_github_java2d_url: "https://github-production-release-
 geoserver_marlin_renderer_github_url: "https://github-production-release-asset-2e65be.s3.amazonaws.com/16202089/edb9f900-35f1-11ea-91e8-52082b939e33?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20201126%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20201126T132427Z&X-Amz-Expires=300&X-Amz-Signature=811102c4311fa0008fb3904f60c383378b5877b06a099bafb1c8919cf5cf0cbd&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=16202089&response-content-disposition=attachment%3B%20filename%3Dmarlin-0.9.4.3-Unsafe.jar&response-content-type=application%2Foctet-stream"
 geoserver_marlin_renderer_java_options: "-Xbootclasspath/a:{{ geoserver_instance_path }}/webapps/geoserver/WEB-INF/lib/marlin*.jar -Dsun.java2d.renderer=org.marlin.pisces.MarlinRenderingEngine"
 
-#geoserver_log_settings:
-#  level: "DEFAULT_LOGGING"
-#  location: "{{ geoserver_log_directory }}"
-#  stdout: false
+geoserver_log_settings:
+  level: "DEFAULT_LOGGING"
+  location: "{{ geoserver_log_directory }}"
+  stdout: false
 # 
