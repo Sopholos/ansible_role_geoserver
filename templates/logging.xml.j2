@@ -1,0 +1,5 @@
+<logging>
+  <level>{{ geoserver_log_settings.level | default ('DEFAULT_LOGGING') }}</level>
+  <location>{{ geoserver_log_settings.location | default ('/var/log/geoserver') }}</location>
+  <stdOutLogging>{{ geoserver_log_settings.stdout | default ('false') }}</stdOutLogging>
+</logging>

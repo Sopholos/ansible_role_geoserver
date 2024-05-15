@@ -46,5 +46,12 @@
     dest: "{{ geoserver_instance_path_versioned }}"
   when: geoserver_download is changed or geoserver_instance_folder is changed
 
+- name: copy log configuration file
+  template:
+    dest: "{{ geoserver_data_directory }}/logging.xml"
+    src: logging.xml.j2
+    mode: '0644'
+  notify: Restart geoserver services
+
 - name: geoserver service init
   import_tasks: geoserver-service.yml
