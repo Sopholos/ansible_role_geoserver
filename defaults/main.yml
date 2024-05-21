@@ -48,4 +48,3 @@ geoserver_log_settings:
   level: "DEFAULT_LOGGING"
   location: "{{ geoserver_log_directory }}"
   stdout: false
-# 
