@@ -23,6 +23,9 @@ geoserver_spatial_url: 'http://ares.boundlessgeo.com/geoserver/{{ geoserver_majo
 geoserver_vectortiles_install: False
 geoserver_vectortiles_url: 'https://sourceforge.net/projects/geoserver/files/GeoServer/{{ geoserver_version }}/extensions/geoserver-{{ geoserver_version }}-vectortiles-plugin.zip'
 
+geoserver_pyramid_install: false
+geoserver_pyramid_url: 'https://build.geoserver.org/geoserver/{{ geoserver_major_version }}.x/ext-latest/geoserver-{{ geoserver_major_version }}-SNAPSHOT-pyramid-plugin.zip'
+
 geoserver_css_install: False
 geoserver_css_url: 'https://sourceforge.net/projects/geoserver/files/GeoServer/{{ geoserver_version }}/extensions/geoserver-{{ geoserver_version }}-css-plugin.zip'
 
