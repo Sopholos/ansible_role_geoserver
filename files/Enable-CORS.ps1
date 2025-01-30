@@ -5,6 +5,8 @@ param(
     [parameter(Mandatory=$true)][string]$path
 )
 
+$ErrorActionPreference = "Stop"
+
 function Remove-Comment($text, $startComment, $endComment) {
     $startIndex = $text.IndexOf($startComment)
     if ($startIndex -lt 0) { return $text; }
