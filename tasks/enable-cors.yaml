@@ -18,8 +18,12 @@
     owner: root
     group: root
     mode: u+rwx,g=,o=
-  with_items: 
-    - { src: Enable-CORS.ps1, dest: /usr/local/bin/Enable-CORS.ps1 }    
+  with_items:
+    - { src: Enable-CORS.ps1, dest: /usr/local/bin/Enable-CORS.ps1 }
+    - { src: Disable-CSRF.ps1, dest: /usr/local/bin/Disable-CSRF.ps1 }
 
 - name: configure | enable CORS
   shell: /usr/local/bin/Enable-CORS.ps1 "{{ geoserver_instance_path }}/{{ geoserver_version }}/webapps/geoserver/WEB-INF/web.xml"
+
+- name: configure | disable CSRF
+  shell: /usr/local/bin/Disable-CSRF.ps1 "{{ geoserver_instance_path }}/{{ geoserver_version }}/webapps/geoserver/WEB-INF/web.xml"
