@@ -51,3 +51,13 @@ geoserver_log_settings:
   level: "DEFAULT_LOGGING"
   location: "{{ geoserver_log_directory }}"
   stdout: false
+
+java_cacerts_path: /etc/ssl/certs/java/cacerts
+java_cacerts_password: changeit
+
+# list of certificates
+geoserver_certs:
+  - name: cert_1
+    value: value_1
+  - name: cert_2
+    value: value_2

@@ -1,0 +1,19 @@
+- name: Check if alias {{ item.name }} exists in cacerts
+  command: >
+    keytool -list -alias {{ item.name }}
+    -keystore {{ java_cacerts_path }}
+    -storepass {{ java_cacerts_password }}
+  register: alias_check
+  failed_when: false
+  changed_when: false
+
+- name: Import certificate {{ item.name }} into cacerts (if alias missing)
+  command: >
+    keytool -importcert -trustcacerts -alias {{ item.name }}
+    -file /tmp/geoserver_certs/{{ item.name }}.cer
+    -keystore {{ java_cacerts_path }}
+    -storepass {{ java_cacerts_password }} -noprompt
+  when: alias_check.rc != 0
+  register: import_result
+  failed_when: import_result.rc != 0
+  changed_when: import_result.rc == 0

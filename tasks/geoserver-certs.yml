@@ -1,0 +1,42 @@
+---
+
+- name: Ensure temp directory for certs exists
+  file:
+    path: /tmp/geoserver_certs
+    state: directory
+    mode: '0755'
+
+- name: Write certificates to temporary files
+  copy:
+    content: "{{ item.value | default('') }}"
+    dest: "/tmp/geoserver_certs/{{ item.name }}.cer"
+    mode: '0644'
+  loop: "{{ geoserver_certs | default([]) }}"
+  when: item.value is defined and item.value | length > 0
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Check if alias already exists in cacerts
+  command: >
+    keytool -list -keystore {{ java_cacerts_path }}
+    -storepass {{ java_cacerts_password }}
+    -alias {{ item.name }}
+  register: alias_check
+  failed_when: false
+  changed_when: false
+  loop: "{{ geoserver_certs | default([]) }}"
+  when: item.value is defined and item.value | length > 0
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Import each cert (check then import) via include_tasks
+  include_tasks: import-cert.yml
+  loop: "{{ geoserver_certs | default([]) }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: geoserver_certs is defined and geoserver_certs | length > 0
+
+- name: Remove temporary cert files
+  file:
+    path: /tmp/geoserver_certs
+    state: absent
