@@ -42,3 +42,8 @@
 - name: geoserver service
   import_tasks: geoserver-service.yml
   tags: [ install ]
+
+- name: geoserver certs
+  import_tasks: geoserver-certs.yml
+  tags: [ certs ]
+  notify: Restart geoserver services
